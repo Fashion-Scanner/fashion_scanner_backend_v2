@@ -14,3 +14,16 @@ class Category(models.Model):
         verbose_name_plural = "의류 카테고리"
         ordering = ["id"]
 
+
+class Attribute(models.Model):
+    ko_name = models.CharField(max_length=32, verbose_name="의류 속성 한국어")
+    en_name = models.CharField(max_length=32, unique=True, verbose_name="의류 속성 영어")
+
+    def __str__(self):
+        return f"{self.en_name}({self.ko_name})"
+
+    class Meta:
+        db_table = "cloth_attribute"
+        verbose_name = "의류 속성"
+        verbose_name_plural = "의류 속성"
+        ordering = ["id"]
