@@ -1,10 +1,29 @@
 #!/bin/bash
 
-set -o errexit
-set -o pipefail
-set -o nounset
+# set -o errexit
+# set -o pipefail
+# set -o nounset
 
 
-python manage.py migrate
-python manage.py runserver_plus 0.0.0.0:8000
+# python manage.py migrate
+# python manage.py runserver_plus 0.0.0.0:8000
+# python manage.py collectstatic --noinput
+
+# python /app/manage.py migrate --noinput
+# python /app/manage.py collectstatic --noinput
+# python /app/manage.py compilemessages
+
+python manage.py migrate --noinput
 python manage.py collectstatic --noinput
+# python manage.py compilemessages
+
+# Start gunicorn with 4 workers:
+/usr/local/bin/gunicorn config.wsgi \
+  -w 4 \
+  --certfile=/app/kpop.fashion-scanner.site/fullchain.pem \
+  --keyfile=/app/kpop.fashion-scanner.site/privkey.pem \
+  -b 0.0.0.0:443 \
+  --chdir=/app \
+  --log-file=- \
+  --log-level=info \
+  --worker-tmp-dir /dev/shm

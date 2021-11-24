@@ -6,7 +6,7 @@ from rest_framework import serializers
 from server.member.models import Members
 
 
-class KoMemberSerialzier(serializers.ModelSerializer):
+class KoMemberSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField("get_ko_name")
     group_type = serializers.SerializerMethodField("get_group_type")
 
@@ -24,7 +24,7 @@ class KoMemberSerialzier(serializers.ModelSerializer):
         return obj.group_type.capitalize()
 
 
-class EnMemberSerialzier(serializers.ModelSerializer):
+class EnMemberSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField("get_en_name")
     group_type = serializers.SerializerMethodField("get_group_type")
     

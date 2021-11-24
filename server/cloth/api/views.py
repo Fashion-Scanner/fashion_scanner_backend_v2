@@ -12,4 +12,4 @@ class ClothViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     model = Clothes
     queryset = Clothes.objects.all()
-    serialzier_class = KoClothSerializer
+    serializer_class = KoClothSerializer

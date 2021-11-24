@@ -9,7 +9,7 @@ from server.common.models import Color
 from server.cloth.models import Clothes
 from server.member.models import Members
 from server.cloth.api.serializers import KoClothSerializer, EnClothSerializer
-from server.member.api.serializers import KoMemberSerialzier, EnMemberSerialzier
+from server.member.api.serializers import KoMemberSerializer, EnMemberSerializer
 
 # Create your views here.
 
@@ -17,7 +17,7 @@ class MemberViewset(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     model = Members
     queryset = Members.objects.all()
-    serialzier_class = [KoMemberSerialzier, EnMemberSerialzier]
+    serializer_class = KoMemberSerializer
 
     @action(
         detail=False,
@@ -38,42 +38,34 @@ class MemberViewset(viewsets.ModelViewSet):
         member_info = member_info.first()
         # member_info가 받아오는 값
         # name, group_type, color_id
-        ko_member_serializer = KoMemberSerialzier(member_info).data
-        en_member_serializer = EnMemberSerialzier(member_info).data
+        ko_member_serializer = KoMemberSerializer(member_info).data
+        en_member_serializer = EnMemberSerializer(member_info).data
 
         # color 받아오기
         color = Color.objects.get(id=member_info.color_id).hex_code
 
         # clothes 받아오기
         clothes = Clothes.objects.filter(member_id=member_info.id)
-        ko_cloth_serialzier = KoClothSerializer(clothes, many=True).data
-        en_cloth_serialzier = EnClothSerializer(clothes, many=True).data
+        ko_cloth_serializer = KoClothSerializer(clothes, many=True).data
+        en_cloth_serializer = EnClothSerializer(clothes, many=True).data
 
         result["data"]["ko"]["member"] = ko_member_serializer
         result["data"]["ko"]["color"] = color
-        result["data"]["ko"]["clothes"] = ko_cloth_serialzier
+        result["data"]["ko"]["clothes"] = ko_cloth_serializer
     
         result["data"]["en"]["member"] = en_member_serializer
         result["data"]["en"]["color"] = color
-        result["data"]["en"]["clothes"] = en_cloth_serialzier
+        result["data"]["en"]["clothes"] = en_cloth_serializer
 
         return Response(result, status=status.HTTP_200_OK)
-
-
-
-class UserMemberMatchingViewset(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
-    model = Members
-    queryset = Members.objects.all()
-    serialzier_class = [KoMemberSerialzier, EnMemberSerialzier]
 
     @action(
         detail=False,
         methods=["POST"],
         permission_classes=[AllowAny],
-        url_path="info",
+        url_path="matching",
     )
-    def match_to_member(self, request, *args, **kwagrs):
+    def match_member(self, request, *args, **kwagrs):
         
         try:
             result = {}     
@@ -89,4 +81,3 @@ class UserMemberMatchingViewset(viewsets.ModelViewSet):
 
         except Exception as e:
             raise Exception({"message": e})
-

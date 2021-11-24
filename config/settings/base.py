@@ -190,6 +190,9 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 
 INSTALLED_APPS += ["storages"]  # noqa F405
+
+INSTALLED_APPS = ["collectfast"] + INSTALLED_APPS  # noqa F405
+
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_QUERYSTRING_AUTH = False
 # DO NOT change these unless you know what you're doing.

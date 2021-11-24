@@ -20,8 +20,8 @@ services:
       - ./.envs/.prod/.django
       - ./.envs/.local/.postgres
     ports:
-      - "8000:8000"
-    command: /start 
+      - "8000:443"
+    command: /start
 
   postgres:
     build:
