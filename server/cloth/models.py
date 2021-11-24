@@ -54,7 +54,7 @@ class Category(models.Model):
 
 class Attribute(models.Model):
     ko_name = models.CharField(max_length=32, verbose_name="의류 속성 한국어")
-    en_name = models.CharField(max_length=32, unique=True, verbose_name="의류 속성 영어")
+    en_name = models.CharField(max_length=32, verbose_name="의류 속성 영어")
 
     def __str__(self):
         return f"{self.en_name}({self.ko_name})"

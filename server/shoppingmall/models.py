@@ -11,16 +11,18 @@ class ShoppingMall(BaseModel):
 
     image = models.ImageField(
         upload_to=image_upload_to,
-        verbose_name="쇼핑몰 의류 이미지",
+        verbose_name="쇼핑몰 의류 이미지",null=True
     )
     brand = models.ForeignKey(
         "common.Brand", null=True, verbose_name="브랜드", on_delete=models.CASCADE
     )
-    cloth = models.ManyToManyField(
+    cloth = models.ForeignKey(
         "cloth.Clothes",
         verbose_name="의류",
+        null=True,
+        on_delete=models.CASCADE
     )
-    url = models.TextField(verbose_name="웹 페이지 URL")
+    url = models.TextField(verbose_name="웹 페이지 URL",null=True)
     price = models.IntegerField("가격", default=0)
 
     def __str__(self):

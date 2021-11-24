@@ -18,3 +18,19 @@ class ClothesAdmin(admin.ModelAdmin):
         "category",
         # "attributes",
     )
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "ko_name",
+        "en_name",
+    )
+
+@admin.register(Attribute)
+class AttributeAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "ko_name",
+        "en_name",
+    )

@@ -2,6 +2,7 @@ import json
 from rest_framework import serializers
 from server.cloth.models import Clothes, Attribute
 from server.common.models import Color
+from server.shoppingmall.models import ShoppingMall
 
 
 class AttributeSerializer(serializers.ModelSerializer):
@@ -13,14 +14,14 @@ class AttributeSerializer(serializers.ModelSerializer):
 class KoClothSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField("get_category_name")
     attributes = serializers.SerializerMethodField("get_attribute_name")
-
+    
     class Meta:
         model = Clothes
         fields = [
             "image",
             "category_name",
-            "attributes"
-        ]
+            "attributes",
+        ]   
 
     def get_category_name(self, obj):
         return obj.category.ko_name
