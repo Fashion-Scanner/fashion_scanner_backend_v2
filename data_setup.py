@@ -136,14 +136,13 @@ def save_lookbook_clothes():
                     image=_image,
                     member=_member,
                     color=_color,
-                    category=_category,```
+                    category=_category,
                 )
 
-                _shoppingmall = ShoppingMall.objects.create(brand=_brand, price=line[9])
+                ShoppingMall.objects.create(cloth=lookbook, brand=_brand, price=line[9])
 
                 _attributes = [attribute1, attribute2, attribute3]
                 lookbook.attributes.set(_attributes)
-                _shoppingmall.cloth.set([lookbook])
                 lookbook.save()
                 i+=1
 

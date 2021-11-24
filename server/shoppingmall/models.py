@@ -23,7 +23,7 @@ class ShoppingMall(BaseModel):
         on_delete=models.CASCADE
     )
     url = models.TextField(verbose_name="웹 페이지 URL",null=True)
-    price = models.IntegerField("가격", default=0)
+    price = models.CharField("가격", max_length=60,null=True,default=0)
 
     def __str__(self):
         return f"쇼핑몰({self.id})"
