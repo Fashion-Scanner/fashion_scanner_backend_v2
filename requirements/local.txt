@@ -45,6 +45,6 @@ gunicorn==20.0.4  # https://github.com/benoitc/gunicorn
 torch==1.10.0
 torchvision==0.11.1
 
-# pyyaml==5.1
+pyyaml==5.1
 # git+https://github.com/facebookresearch/detectron2.git
 

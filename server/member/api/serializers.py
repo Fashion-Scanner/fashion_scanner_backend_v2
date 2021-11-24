@@ -21,7 +21,7 @@ class KoMemberSerializer(serializers.ModelSerializer):
         return obj.ko_name
 
     def get_group_type(self, obj):
-        return obj.group_type.capitalize()
+        return obj.group_type
 
 
 class EnMemberSerializer(serializers.ModelSerializer):
@@ -36,9 +36,9 @@ class EnMemberSerializer(serializers.ModelSerializer):
         ]
     
     def get_en_name(self, obj):
-        return obj.en_name.capitalize()
+        return obj.en_name.capitalize() if obj.en_name != 'RM' else 'RM'
     
     def get_group_type(self, obj):
-        return obj.group_type.capitalize()
+        return obj.group_type
 
     

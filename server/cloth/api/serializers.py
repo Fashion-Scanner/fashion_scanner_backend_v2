@@ -28,7 +28,7 @@ class KoClothSerializer(serializers.ModelSerializer):
         ]   
 
     def get_brand_name(self, obj):
-        return ShoppingMall.objects.filter(cloth=obj.id).first().brand.name if ShoppingMall.objects.filter(cloth=obj.id) else ""
+        return ShoppingMall.objects.filter(cloth=obj.id).first().brand.name.title() if ShoppingMall.objects.filter(cloth=obj.id) else ""
 
     def get_price_name(self, obj):
         return ShoppingMall.objects.filter(cloth=obj.id).first().price if ShoppingMall.objects.filter(cloth=obj.id) else ""
@@ -43,6 +43,8 @@ class KoClothSerializer(serializers.ModelSerializer):
 class EnClothSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField("get_en_category_name")
     attributes = serializers.SerializerMethodField("get_en_attribute_name")
+    brand = serializers.SerializerMethodField("get_brand_name")
+    price = serializers.SerializerMethodField("get_price_name")
 
     class Meta:
         model = Clothes
@@ -50,10 +52,18 @@ class EnClothSerializer(serializers.ModelSerializer):
             "image",
             "category_name",
             "attributes",
+            "brand",
+            "price"
         ]
 
+    def get_brand_name(self, obj):
+        return ShoppingMall.objects.filter(cloth=obj.id).first().brand.name.title() if ShoppingMall.objects.filter(cloth=obj.id) else ""
+
+    def get_price_name(self, obj):
+        return ShoppingMall.objects.filter(cloth=obj.id).first().price if ShoppingMall.objects.filter(cloth=obj.id) else ""
+
     def get_en_category_name(self, obj):
-        return obj.category.en_name
+        return obj.category.en_name.capitalize()
 
     def get_en_attribute_name(self, obj):
         return [attribute.en_name.replace("_", " ").title() for attribute in obj.attributes.all()]

@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install -y build-essential \
     # psycopg2 dependencies
     && apt-get install -y libpq-dev \
+    && apt-get install -y git \
     # Translations dependencies
     && apt-get install -y gettext \
     && apt-get install -y libgl1-mesa-glx \
@@ -18,7 +19,10 @@ RUN apt-get update \
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
-    
+
+RUN git clone https://github.com/facebookresearch/detectron2.git
+RUN pip install -e detectron2
+
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
