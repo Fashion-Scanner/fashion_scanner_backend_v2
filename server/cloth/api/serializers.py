@@ -16,7 +16,8 @@ class KoClothSerializer(serializers.ModelSerializer):
     attributes = serializers.SerializerMethodField("get_attribute_name")
     brand = serializers.SerializerMethodField("get_brand_name")
     price = serializers.SerializerMethodField("get_price_name")
-    
+    color = serializers.SerializerMethodField("get_color_code")
+
     class Meta:
         model = Clothes
         fields = [
@@ -24,11 +25,15 @@ class KoClothSerializer(serializers.ModelSerializer):
             "category_name",
             "attributes",
             "brand",
-            "price"
+            "price",
+            "color"
         ]   
 
     def get_brand_name(self, obj):
         return ShoppingMall.objects.filter(cloth=obj.id).first().brand.name.title() if ShoppingMall.objects.filter(cloth=obj.id) else ""
+
+    def get_color_code(self, obj):
+        return obj.color.hex_code if obj.color else ""
 
     def get_price_name(self, obj):
         return ShoppingMall.objects.filter(cloth=obj.id).first().price if ShoppingMall.objects.filter(cloth=obj.id) else ""
@@ -45,6 +50,7 @@ class EnClothSerializer(serializers.ModelSerializer):
     attributes = serializers.SerializerMethodField("get_en_attribute_name")
     brand = serializers.SerializerMethodField("get_brand_name")
     price = serializers.SerializerMethodField("get_price_name")
+    color = serializers.SerializerMethodField("get_color_code")
 
     class Meta:
         model = Clothes
@@ -53,11 +59,15 @@ class EnClothSerializer(serializers.ModelSerializer):
             "category_name",
             "attributes",
             "brand",
-            "price"
+            "price",
+            "color"
         ]
 
     def get_brand_name(self, obj):
         return ShoppingMall.objects.filter(cloth=obj.id).first().brand.name.title() if ShoppingMall.objects.filter(cloth=obj.id) else ""
+
+    def get_color_code(self, obj):
+        return obj.color.hex_code if obj.color else ""
 
     def get_price_name(self, obj):
         return ShoppingMall.objects.filter(cloth=obj.id).first().price if ShoppingMall.objects.filter(cloth=obj.id) else ""
